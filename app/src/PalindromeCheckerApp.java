@@ -1,60 +1,40 @@
-import java.util.Scanner;
-
-class PalindromeChecker {
-
-
-    public boolean checkPalindrome(String input) {
-
-        if (input == null) return false;
-
-
-        String normalized = normalize(input);
-
-
-        char[] arr = normalized.toCharArray();
-
-        int left = 0;
-        int right = arr.length - 1;
-
-        while (left < right) {
-            if (arr[left] != arr[right]) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-
-        return true;
-    }
-
-
-    private String normalize(String str) {
-        return str.toLowerCase().replaceAll("\\s+", "");
-    }
-}
+import java.util.Stack;
 
 public class PalindromeCheckerApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
-        Scanner sc = new Scanner(System.in);
+        String input = "level";
 
-        System.out.println("=== UC11: Object-Oriented Palindrome Service ===");
-        System.out.print("Enter a string: ");
-        String input = sc.nextLine();
+        PalindromeStrategy strategy = new StackStrategy();
 
+        boolean result = strategy.check(input);
 
-        PalindromeChecker checker = new PalindromeChecker();
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
+    }
+}
 
+interface PalindromeStrategy {
+    boolean check(String input);
+}
 
-        boolean result = checker.checkPalindrome(input);
+class StackStrategy implements PalindromeStrategy {
 
-        if (result) {
-            System.out.println("Result: The string is a Palindrome.");
-        } else {
-            System.out.println("Result: The string is NOT a Palindrome.");
+    public boolean check(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
 
-        sc.close();
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
