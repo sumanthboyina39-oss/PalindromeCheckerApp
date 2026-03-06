@@ -1,22 +1,60 @@
-public class PalindromeCheckerApp {
-    public static void main(String[] args) {
-        String word = "A man a plan a canal Panama";
-        String normalized = word.replaceAll("\\s+", "").toLowerCase();
+import java.util.Scanner;
 
-        if (isPalindrome(normalized, 0, normalized.length() - 1)) {
-            System.out.println(word + " is a Palindrome");
-        } else {
-            System.out.println(word + " is not a Palindrome");
+class PalindromeChecker {
+
+
+    public boolean checkPalindrome(String input) {
+
+        if (input == null) return false;
+
+
+        String normalized = normalize(input);
+
+
+        char[] arr = normalized.toCharArray();
+
+        int left = 0;
+        int right = arr.length - 1;
+
+        while (left < right) {
+            if (arr[left] != arr[right]) {
+                return false;
+            }
+            left++;
+            right--;
         }
+
+        return true;
     }
 
-    public static boolean isPalindrome(String word, int start, int end) {
-        if (start >= end) {
-            return true;
+
+    private String normalize(String str) {
+        return str.toLowerCase().replaceAll("\\s+", "");
+    }
+}
+
+public class PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("=== UC11: Object-Oriented Palindrome Service ===");
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
+
+
+        PalindromeChecker checker = new PalindromeChecker();
+
+
+        boolean result = checker.checkPalindrome(input);
+
+        if (result) {
+            System.out.println("Result: The string is a Palindrome.");
+        } else {
+            System.out.println("Result: The string is NOT a Palindrome.");
         }
-        if (word.charAt(start) != word.charAt(end)) {
-            return false;
-        }
-        return isPalindrome(word, start + 1, end - 1);
+
+        sc.close();
     }
 }
