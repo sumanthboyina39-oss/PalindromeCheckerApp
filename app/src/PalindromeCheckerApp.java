@@ -1,22 +1,21 @@
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class PalindromeCheckerApp {
     public static void main(String[] args) {
-        String word = "refer";
+        String word = "level";
         boolean isPalindrome = true;
 
-        Deque<Character> deque = new ArrayDeque<>();
+        LinkedList<Character> list = new LinkedList<>();
         Stack<Character> stack = new Stack<>();
 
         for (char c : word.toCharArray()) {
-            deque.add(c);
+            list.add(c);
             stack.push(c);
         }
 
-        while (!deque.isEmpty()) {
-            if (!deque.remove().equals(stack.pop())) {
+        while (!list.isEmpty()) {
+            if (!list.removeFirst().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
